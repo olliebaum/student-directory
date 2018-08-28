@@ -12,8 +12,9 @@ students = [
   "Joffrey Baratheon",
   "Norman Bates"
 ]
+puts "Students of Villains Academy"
+puts "----------------------------"
 students.each { |student| puts student }
 
 #Then it prints a count of the students
-student_count = students.length
-puts "Overall, we have #{student_count} great students"
+puts "Overall, we have #{students.count} great students"
