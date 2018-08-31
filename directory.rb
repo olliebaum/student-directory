@@ -27,7 +27,13 @@ def print_list_of(students, letter)
       puts "#{index}. #{student[:name]} (#{student[:cohort]} cohort)"
   }
 end
-
+def print_list_of_all(students)
+  i = 0
+  while i < students.count
+    puts "#{i+1}. #{students[i][:name]} (#{students[i][:cohort]} cohort)"
+    i += 1
+  end
+end
 def print_footer(students)
 puts "(N.B. Students with 12 or more characters in their name were omitted.)"
 puts "Overall, we have #{students.count} great students"
@@ -35,5 +41,6 @@ end
 
 students = input_students
 print_header
-print_list_of(students, ask_for_letter)
+print_list_of_all(students)
+#print_list_of(students, ask_for_letter)
 print_footer(students)
