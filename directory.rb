@@ -16,9 +16,15 @@ def print_header
   puts "----------------------------"
 end
 
-def print_list_of(students)
-  students.each.with_index(1) { |student, index|
-    puts "#{index}. #{student[:name]} (#{student[:cohort]} cohort)"
+def ask_for_letter
+  puts "Print students beginning with which letter?"
+  letter = gets.chomp
+end
+def print_list_of(students, letter)
+  students.select{|student|
+    student[:name].chars.first.downcase == letter.downcase
+  }.each.with_index(1) { |student, index|
+      puts "#{index}. #{student[:name]} (#{student[:cohort]} cohort)"
   }
 end
 
@@ -28,5 +34,5 @@ end
 
 students = input_students
 print_header
-print_list_of(students)
+print_list_of(students, ask_for_letter)
 print_footer(students)
