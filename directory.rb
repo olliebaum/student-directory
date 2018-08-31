@@ -17,18 +17,19 @@ def print_header
 end
 
 def ask_for_letter
-  puts "Print students beginning with which letter?"
+  print "Print students beginning with which letter? "
   letter = gets.chomp
 end
 def print_list_of(students, letter)
   students.select{|student|
-    student[:name].chars.first.downcase == letter.downcase
+    student[:name].chars.first.downcase == letter.downcase && student[:name].length < 12
   }.each.with_index(1) { |student, index|
       puts "#{index}. #{student[:name]} (#{student[:cohort]} cohort)"
   }
 end
 
 def print_footer(students)
+puts "(N.B. Students with 12 or more characters in their name were omitted.)"
 puts "Overall, we have #{students.count} great students"
 end
 
