@@ -6,7 +6,7 @@ def input_students
   while true
     name = gets.chomp
     break if name.empty?
-    students << {name: name, cohort: :september}
+    students << {name: name, cohort: :september, country: "UK", age: "25", }
     puts "#{students.count} students in total."
   end
   return students
@@ -24,13 +24,13 @@ def print_list_of(students, letter)
   students.select{|student|
     student[:name].chars.first.downcase == letter.downcase && student[:name].length < 12
   }.each.with_index(1) { |student, index|
-      puts "#{index}. #{student[:name]} (#{student[:cohort]} cohort)"
+      puts "#{index}. #{student[:name]}, #{student[:age]} from #{student[:country]} (#{student[:cohort]} cohort)"
   }
 end
 def print_list_of_all(students)
   i = 0
   while i < students.count
-    puts "#{i+1}. #{students[i][:name]} (#{students[i][:cohort]} cohort)"
+    puts "#{i+1}. #{students[i][:name]}, #{students[i][:age]} from #{students[i][:country]} (#{students[i][:cohort]} cohort)"
     i += 1
   end
 end
