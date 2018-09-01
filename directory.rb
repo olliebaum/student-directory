@@ -10,18 +10,19 @@ def input_students
   puts "Enter details for the first student."
   print "Name: ".rjust(10)
   while true
-    name = gets.chomp
+    name = gets.delete("\n")
     break if name.empty?
-    print "Age: ".rjust(10); age = gets.chomp.to_sym
-    print "Country: ".rjust(10); country = gets.chomp.to_sym
-    print "Cohort: ".rjust(10); cohort = gets.chomp.to_sym
+    print "Age: ".rjust(10); age = gets.delete("\n").to_sym
+    print "Country: ".rjust(10); country = gets.delete("\n").to_sym
+    print "Cohort: ".rjust(10); cohort = gets.delete("\n").to_sym
     age = :"??" if age == :""
     country = :Unknown if country == :""
     cohort = :September if cohort == :""
     students << {name: name,  age: age, country: country, cohort: cohort}
     puts "'#{name}' added. #{students.count} " +
     (students.count == 1 ? "student" : "students") + " in total."
-    puts "Input a new student's name (or hit enter to finish):"
+    puts "Input a new student's name (or hit enter to finish)"
+    print "Name: ".rjust(10)
   end
   return students.sort_by{|student| student[:name]}
 end
@@ -33,7 +34,7 @@ end
 
 def ask_for_letter
   print "Print students beginning with which letter? "
-  letter = gets.chomp
+  letter = gets.delete("\n")
 end
 
 def print_list_of(students)
