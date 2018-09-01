@@ -23,7 +23,7 @@ def input_students
     (students.count == 1 ? "student" : "students") + " in total."
     puts "Input a new student's name (or hit enter to finish):"
   end
-  return students
+  return students.sort_by{|student| student[:name]}
 end
 
 def print_header
@@ -36,19 +36,23 @@ def ask_for_letter
   letter = gets.chomp
 end
 
-def print_list_of(students, letter)
-  students.select{|student|
-    student[:name].chars.first.downcase == letter.downcase && student[:name].length < 12
+def print_list_of(students)
+  truncated = false
+  students.sort_by {|student| student[:cohort]
   }.each.with_index(1) { |student, index|
-       puts align_student_data(student,index)
-    }  
-  puts "(N.B. Students with 12 or more characters in their name were omitted.)"
+      if student[:name].length > 15 then
+        student[:name] = student[:name].slice(0...14) + "*"
+        truncated = true
+      end
+      puts align_student_data(student,index)
+    }
+  puts "* Name has been truncated." if truncated
 end
 
 def print_list_of_all(students)
-  i = 0
   puts align_student_data(
     {name: "Name",  age: "Age", country: "Country", cohort: "Cohort"}, "#")
+  i = 0
   while i < students.count
     puts align_student_data(students[i], i+1)
     i += 1
@@ -71,6 +75,6 @@ end
 program_intro
 students = input_students
 print_header
-print_list_of_all(students)
-#print_list_of(students, ask_for_letter)
+#print_list_of_all(students)
+print_list_of(students)
 print_footer(students)
