@@ -26,16 +26,17 @@ def print_list_of(students, letter)
   }.each.with_index(1) { |student, index|
       puts "#{index}. #{student[:name]}, #{student[:age]} from #{student[:country]} (#{student[:cohort]} cohort)"
   }
+  puts "(N.B. Students with 12 or more characters in their name were omitted.)"
 end
 def print_list_of_all(students)
   i = 0
+  puts "#.".ljust(4) + "Name".ljust(20) + "Age".ljust(4) + "Country".ljust(11) + "Cohort".ljust(11)
   while i < students.count
-    puts "#{i+1}. #{students[i][:name]}, #{students[i][:age]} from #{students[i][:country]} (#{students[i][:cohort]} cohort)"
+    puts "#{i+1}.".ljust(4) + students[i][:name].ljust(20) + students[i][:age].ljust(4) + students[i][:country].ljust(11) + "#{students[i][:cohort]}".ljust(11)
     i += 1
   end
 end
 def print_footer(students)
-puts "(N.B. Students with 12 or more characters in their name were omitted.)"
 puts "Overall, we have #{students.count} great students"
 end
 
