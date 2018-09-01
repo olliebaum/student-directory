@@ -40,23 +40,28 @@ def print_list_of(students, letter)
   students.select{|student|
     student[:name].chars.first.downcase == letter.downcase && student[:name].length < 12
   }.each.with_index(1) { |student, index|
-      puts "#{index}. #{student[:name]}, #{student[:age]} from #{student[:country]} (#{student[:cohort]} cohort)"
-  }
+       puts align_student_data(student,index)
+    }  
   puts "(N.B. Students with 12 or more characters in their name were omitted.)"
 end
 
 def print_list_of_all(students)
   i = 0
-  puts "#.".ljust(4) + "Name".ljust(20) + "Age".ljust(4) + "Country".ljust(11) + "Cohort".ljust(11)
+  puts align_student_data(
+    {name: "Name",  age: "Age", country: "Country", cohort: "Cohort"}, "#")
   while i < students.count
-    puts "#{i+1}.".ljust(4) +
-    "#{students[i][:name]}".ljust(20) +
-    "#{students[i][:age]}".ljust(4) +
-    "#{students[i][:country]}".ljust(11) +
-    "#{students[i][:cohort]}".ljust(11)
+    puts align_student_data(students[i], i+1)
     i += 1
   end
   puts "-----------------------------------------------"
+end
+
+def align_student_data(student, index)
+  "#{index}.".ljust(4) +
+  "#{student[:name]}".ljust(20) +
+  "#{student[:age]}".ljust(4) +
+  "#{student[:country]}".ljust(11) +
+  "#{student[:cohort]}".ljust(11)
 end
 
 def print_footer(students)
