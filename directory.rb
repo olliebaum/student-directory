@@ -75,7 +75,11 @@ end
 
 program_intro
 students = input_students
-print_header
-#print_list_of_all(students)
-print_list_of(students)
-print_footer(students)
+unless students.empty?
+  print_header
+  #print_list_of_all(students)
+  print_list_of(students)
+  print_footer(students)
+else
+  puts "No students entered."
+end
