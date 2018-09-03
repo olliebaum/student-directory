@@ -1,31 +1,38 @@
+@students = []
 def program_intro
   puts
   puts "WELCOME TO THE STUDENT DIRECTORY."
   puts
 end
 
+def print_menu
+  puts "COMMANDS"
+  puts "1. Input the students"
+  puts "2. Show the students"
+  puts "9. Exit"
+  print "Type a number: "
+end
+
+def show_students
+  unless @students.empty?
+    print_header
+    print_list_of(@students)
+    print_footer
+  else
+    puts "No students entered."
+  end
+end
+
 def interactive_menu
   program_intro
-  students = []
   loop do
-    # 1. print the menu and ask the user what to do
-    puts "1. Input the students"
-    puts "2. Show the students"
-    puts "9. Exit"
-    # 2. read the input and save it into a variable
+    print_menu
     command = gets.chomp
-    # 3. do what the user has asked
     case command
     when "1"
-      students = input_students
+      @students = input_students
     when "2"
-      unless students.empty?
-        print_header
-        print_list_of(students)
-        print_footer(students)
-      else
-        puts "No students entered."
-      end
+      show_students
     when "9"
       exit
     else
@@ -35,7 +42,6 @@ def interactive_menu
 end
 
 def input_students
-  students = []
   puts "Enter details for the first student."
   print "Name: ".rjust(10)
   while true
@@ -47,13 +53,13 @@ def input_students
     age = :"??" if age == :""
     country = :Unknown if country == :""
     cohort = :September if cohort == :""
-    students << {name: name,  age: age, country: country, cohort: cohort}
-    puts "'#{name}' added. #{students.count} " +
-    (students.count == 1 ? "student" : "students") + " in total."
+    @students << {name: name,  age: age, country: country, cohort: cohort}
+    puts "'#{name}' added. #{@students.count} " +
+    (@students.count == 1 ? "student" : "students") + " in total."
     puts "Input a new student's name (or hit enter to finish)"
     print "Name: ".rjust(10)
   end
-  return students.sort_by{|student| student[:name]}
+  return @students.sort_by{|student| student[:name]}
 end
 
 def print_header
@@ -98,8 +104,8 @@ def align_student_data(student, index)
   "#{student[:cohort]}".ljust(11)
 end
 
-def print_footer(students)
-  puts "Total students: #{students.count}"
+def print_footer
+  puts "Total students: #{@students.count}"
 end
 
 interactive_menu
