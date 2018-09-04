@@ -9,6 +9,7 @@ def print_menu
   puts "COMMANDS"
   puts "1. Input the students"
   puts "2. Show the students"
+  puts "3. Save students"
   puts "9. Exit"
   print "Type a number: "
 end
@@ -23,12 +24,24 @@ def show_students
   end
 end
 
+def save_students
+  student_file = File.open("students.csv", "w")
+  @students.each {|student|
+    line = student.values.join(",")
+    student_file.puts(line)
+  }
+  student_file.close
+  puts "Students saved."
+end
+
 def command(selection)
   case selection
     when "1"
       @students = input_students
     when "2"
       show_students
+    when "3"
+      save_students
     when "9"
       exit
     else
