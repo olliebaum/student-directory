@@ -23,12 +23,8 @@ def show_students
   end
 end
 
-def interactive_menu
-  program_intro
-  loop do
-    print_menu
-    command = gets.chomp
-    case command
+def command(selection)
+  case selection
     when "1"
       @students = input_students
     when "2"
@@ -38,6 +34,13 @@ def interactive_menu
     else
       puts "I don't know what you meant, try again"
     end
+end
+
+def interactive_menu
+  program_intro
+  loop do
+    print_menu
+    command(gets.chomp)
   end
 end
 
