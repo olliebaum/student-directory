@@ -2,16 +2,16 @@
 def program_intro
   puts
   puts "WELCOME TO THE STUDENT DIRECTORY."
-  puts
 end
 
 def print_menu
+  puts
   puts "COMMANDS"
   puts "1. Input the students"
   puts "2. Show the students"
   puts "3. Save students"
   puts "4. Load students"
-  puts "9. Exit"
+  puts "9. Exit", puts
   print "Type a number: "
 end
 
@@ -36,12 +36,12 @@ def command(selection)
     when "9"
       exit
     else
-      puts "I don't know what you meant, try again"
+      puts; puts "I don't know what you meant, try again"
     end
 end
 
 def input_students
-  puts "Enter details for the first student."
+  puts; puts "Enter details for the first student."
   print "Name: ".rjust(10)
   while true
     name = STDIN.gets.delete("\n")
@@ -49,16 +49,21 @@ def input_students
     print "Age: ".rjust(10); age = STDIN.gets.delete("\n").to_sym
     print "Country: ".rjust(10); country = STDIN.gets.delete("\n").to_sym
     print "Cohort: ".rjust(10); cohort = STDIN.gets.delete("\n").to_sym
-    age = :"??" if age == :""
-    country = :Unknown if country == :""
-    cohort = :September if cohort == :""
-    @students << {name: name,  age: age, country: country, cohort: cohort}
-    puts "'#{name}' added. #{@students.count} " +
+    add_to_students(name, age, country, cohort)
+    puts; puts "'#{name}' added. #{@students.count} " +
     (@students.count == 1 ? "student" : "students") + " in total."
     puts "Input a new student's name (or hit enter to finish)"
     print "Name: ".rjust(10)
   end
   return @students.sort_by{|student| student[:name]}
+end
+
+def add_to_students(name, age=:"??", country=:Unknown, cohort=:September)
+  age = :"??" if age == :""
+  country = :Unknown if country == :""
+  cohort = :September if cohort == :""
+  @students << {name: name,  age: age.to_sym, country: country.to_sym, cohort: cohort.to_sym}
+  return
 end
 
 def show_students
@@ -67,7 +72,7 @@ def show_students
     print_list_of(@students)
     print_footer
   else
-    puts "No students entered."
+    puts; puts "No students entered."
   end
 end
 
@@ -78,15 +83,17 @@ def save_students
     student_file.puts(line)
   }
   student_file.close
-  puts "Students saved."
+  puts; puts "Students saved."
 end
 
 def load_students(filename = "students.csv")
+  old_count = @students.count
   student_file = File.open(filename, "r")
   student_file.readlines.each do |line|
     name, age, country, cohort = line.chomp.split(",")
-    @students << {name: name, age: age.to_sym, country: country.to_sym, cohort: cohort.to_sym}
+    add_to_students(name, age, country, cohort)
   end
+  puts; puts "#{@students.count - old_count} students loaded. #{@students.count} students in total"
   student_file.close
 end
 
@@ -95,20 +102,21 @@ def try_load_students
   return if filename.nil?
   if File.exists?(filename)
     load_students(filename)
-    puts "Loaded #{@students.count} from #{filename}"
+    puts; puts "Loaded #{@students.count} from #{filename}"
   else
-    puts "Sorry, #{filename} doesn't exist."
+    puts; puts "Sorry, #{filename} doesn't exist."
     exit # quit the program
   end
 end
 
 def print_header
+  puts
   puts "Students of Villains Academy"
   puts "-----------------------------------------------"
 end
 
 def ask_for_letter
-  print "Print students beginning with which letter? "
+  puts; print "Print students beginning with which letter? "
   letter = STDIN.gets.delete("\n")
 end
 
@@ -145,7 +153,7 @@ def align_student_data(student, index)
 end
 
 def print_footer
-  puts "Total students: #{@students.count}"
+  puts; puts "Total students: #{@students.count}"
 end
 
 try_load_students
