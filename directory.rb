@@ -1,3 +1,4 @@
+require 'csv'
 @students = []
 def program_intro
   puts
@@ -92,10 +93,9 @@ def save_students
     end
   end
   if filename.empty? then filename = "students.csv" end
-  File.open(filename, "w") {|student_file|
+  CSV.open(filename, "w") {|student_file|
     @students.each {|student|
-      line = student.values.join(",")
-      student_file.puts(line)
+      student_file << student.values
     }
   }
   puts; puts "#{@students.count} students saved to #{filename}."
@@ -114,11 +114,9 @@ end
 def load_students(filename = "students.csv")
   if filename.empty? then filename = "students.csv" end
   old_count = @students.count
-  File.open(filename, "r") {|student_file|
-    student_file.readlines.each do |line|
-      name, age, country, cohort = line.chomp.split(",")
+  CSV.foreach(filename) {|row|
+      name, age, country, cohort = row
       add_to_students(name, age, country, cohort)
-    end
   }
   puts; puts "Loaded #{@students.count - old_count} students from #{filename}." +
                                        " #{@students.count} students in total."

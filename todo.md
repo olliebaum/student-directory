@@ -8,3 +8,5 @@
 - [ ] Fix loading students puts message so they don't repeat on startup
 - [ ] Don't puts out the menu all the time.
 - [ ] Use \r to rewrite the line and interactively show the next relevant information
+- [ ] Add command to delete one or all of the students
+- [ ] Allow load to overwrite the current students and ask if the user would like them to be overwritten.
